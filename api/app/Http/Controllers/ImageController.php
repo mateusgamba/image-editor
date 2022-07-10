@@ -13,7 +13,7 @@ class ImageController extends Controller
     $filesSerialized = array_map(function ($file) {
       return [
         'file' => $file,
-        'url' =>  Storage::url($file)
+        'url' =>  Storage::disk('s3')->url($file)
       ];
     }, $files);
     return response()->json($filesSerialized);
