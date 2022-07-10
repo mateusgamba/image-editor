@@ -1,6 +1,70 @@
+body {
+  background-color: #ffae6c;
+  font-family: "Raleway", sans-serif;
+}
+
+h1 {
+  color: #003269;
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  border-bottom: 2px solid #003269;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
 .tui-image-editor-header-logo {
   display: none !important;
 }
-.tui-image-editor-header-buttons > div {
+.tui-image-editor-header-buttons {
   display: none !important;
+}
+
+.box:hover {
+  transition: 0.4s;
+  transform: translate(-1%, -1%);
+}
+
+.box {
+  position: relative;
+  height: 200px;
+
+  border-radius: 8px;
+  margin-bottom: 7%;
+  transition: 1s;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.btn-primary {
+  background-color: #003269;
+  border-color: #003269;
+}
+
+.loading-indicator:before {
+  content: "";
+  background: #000000cc;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.loading-indicator:after {
+  content: "Loading";
+  position: fixed;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  z-index: 1001;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
 }

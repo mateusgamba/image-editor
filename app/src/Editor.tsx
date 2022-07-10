@@ -2,9 +2,15 @@ import React from "react";
 import "tui-image-editor/dist/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
 import axios from "axios";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Editor() {
   const editorRef = React.createRef();
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const url = searchParams.get("url");
 
   function dataURItoBlob(dataURI: any) {
     var byteString = atob(dataURI.split(",")[1]);
@@ -20,7 +26,7 @@ function Editor() {
     return new Blob([ab], { type: mimeString });
   }
 
-  const open = () => {
+  const save = () => {
     if (Boolean(editorRef?.current)) {
       const editor = editorRef?.current as any;
       const instance = editor.getInstance();
@@ -36,28 +42,41 @@ function Editor() {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then(function (response) {
-          //handle success
-          console.log(response);
+          navigate("/");
         })
         .catch(function (response) {
-          //handle error
-          console.log(response);
+          console.log("Error", response);
         });
     }
   };
 
   return (
-    <div>
-      Editor
+    <div className="container-xl">
+      <h1>Images - Editor</h1>
+      <div className="row mb-3">
+        <div className="col-6">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => navigate("/")}
+          >
+            Back
+          </button>
+        </div>
+        <div className="col-6 text-end">
+          <button type="button" className="btn btn-primary" onClick={save}>
+            Save Image
+          </button>
+        </div>
+      </div>
       <ImageEditor
         ref={editorRef}
         includeUI={{
           loadImage: {
-            path: "https://7libras.s3.nl-ams.scw.cloud/editor/test.png",
+            path: url,
             name: "test.png",
           },
           uiSize: {
-            width: "1000px",
             height: "700px",
           },
           menuBarPosition: "bottom",
@@ -70,9 +89,6 @@ function Editor() {
         }}
         usageStatistics={true}
       />
-      <button type="button" onClick={open}>
-        Save
-      </button>
     </div>
   );
 }

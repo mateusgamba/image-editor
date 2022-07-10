@@ -26,11 +26,12 @@ class ImageController extends Controller
     $file->storePublicly(
       'editor/', 's3'
     );
+
     $name = $file->hashName();
 
     return response()->json([
       'file' => $name,
-      'url' =>  Storage::disk('s3')->url('editor/'.$name)
+      'url' =>  Storage::disk('s3')->url('editor/' . $name)
     ]);
   }
 }
