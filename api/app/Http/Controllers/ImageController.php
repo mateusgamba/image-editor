@@ -30,7 +30,7 @@ class ImageController extends Controller
 
     return response()->json([
       'file' => $name,
-      'url' =>  Storage::url('editor/'.$name)
+      'url' =>  Storage::disk('s3')->url('editor/'.$name)
     ]);
   }
 }

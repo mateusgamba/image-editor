@@ -1,0 +1,6 @@
+.tui-image-editor-header-logo {
+  display: none !important;
+}
+.tui-image-editor-header-buttons > div {
+  display: none !important;
+}
