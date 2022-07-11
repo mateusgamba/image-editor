@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "tui-image-editor/dist/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
 import axios from "axios";
@@ -49,6 +49,56 @@ function Editor() {
         });
     }
   };
+
+  useEffect(() => {
+    let fontArray = [
+      "Noto Serif",
+      "Comic Neue",
+      "Noto Serif",
+      "Raleway",
+      "Splash",
+    ];
+
+    let fontSelectHTML =
+      '<div style="float:left"><select id="fontselect" class="form-select font-selector">';
+    for (let i = 0; i < fontArray.length; i++) {
+      let selected = "";
+      if (i === 0) {
+        selected = "selected";
+      }
+      fontSelectHTML +=
+        '<option style="font-family:' +
+        fontArray[i] +
+        ';" value="' +
+        fontArray[i] +
+        '" ' +
+        selected +
+        ">" +
+        fontArray[i] +
+        "</option>";
+    }
+    fontSelectHTML +=
+      "</select></div> <li class='tui-image-editor-partition'><div></div></li>";
+
+    let textMenuAlign = document.querySelector(
+      ".tui-image-editor-menu-text .tie-text-align-button"
+    );
+    textMenuAlign?.insertAdjacentHTML("afterbegin", fontSelectHTML);
+
+    document.querySelector(".font-selector")?.addEventListener("change", () => {
+      const v = document.querySelector(".font-selector") as any;
+
+      if (Boolean(editorRef?.current)) {
+        const editor = editorRef?.current as any;
+        const instance = editor.getInstance();
+        const id = instance.activeObjectId;
+        instance.changeTextStyle(id, {
+          fontFamily: v.value,
+        });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="container-xl">
